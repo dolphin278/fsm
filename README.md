@@ -75,3 +75,14 @@ Returns array of edges, that can be followed from current machine state.
 
 Attempt to change machine state following edge specified by `edgeName`.
 Callback should take two arguments `(err, status)`, where `err` will contain any errors encountered during attempt to change state, and `status` will contain boolean value indication whether attempt was successful, or not.
+
+## Events
+
+## emit('state', edge)
+
+When we successfully made a transition to a new state, fsm instance emits 'state' event, passing edge we followed as argument.
+While edge object contains both `from` and `to` fields, you can figure out, what was previous state.
+
+## emit('terminal', edge)
+
+When we successfully made a transition to a new state, and this state is terminal (there is no edges outbound for current state) fsm instance emits 'terminal' event, passing edge we followed as argument.
