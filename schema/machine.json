@@ -1,7 +1,7 @@
 {
     "type": "object",
     "properties": {
-        "states": {
+        "nodes": {
             "type": "array",
             "minItems": 2,
             "required": true,
