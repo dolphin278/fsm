@@ -9,8 +9,11 @@ var routerFunc = function (edge, callback) {
     callback(null, true);
 };
 
+
 describe('FSM', function () {
     var fsm;
+    var eventsStateLog = {};
+    var eventsTerminalLog = {};
     before(function () {
         fsm = new FSM(machine, routerFunc);
     });
@@ -23,6 +26,14 @@ describe('FSM', function () {
         assert(fsm.currentState);
         assert.equal(fsm.currentState, machine.currentState);
         assert(fsm.data.someData === "someDataValue");
+
+        fsm.on('state', function (edge) {
+            eventsStateLog[edge.from + edge.to] = (eventsStateLog[edge.from + edge.to] || 0) + 1;
+        });
+
+        fsm.on('terminal', function (edge) {
+            eventsTerminalLog[edge.from + edge.to] = (eventsTerminalLog[edge.from + edge.to] || 0) + 1;
+        })
     });
 
     describe('when requesting available edges', function () {
@@ -41,7 +52,7 @@ describe('FSM', function () {
             }));
         });
         
-        describe('when attempting to follow an edge', function () {
+        describe('when attempting to follow an edge AB', function () {
             before(function (done) {
                 fsm.follow(edges[0].name, done);
             });
@@ -52,6 +63,20 @@ describe('FSM', function () {
 
             it('should change currentState', function () {
                 assert(fsm.currentState === "B");
+            });
+
+            it('should emit "state" event', function () {
+                assert(eventsStateLog["AB"] >  0);
+            });
+
+            describe('when attempting to follow edge BD', function () {
+                before(function (done) {
+                    fsm.follow("BD", done);
+                });
+
+                it('should emit "terminal" event', function () {
+                    assert(eventsTerminalLog["BD"] > 0);
+                });
             });
         });
     });
