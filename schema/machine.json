@@ -1,0 +1,49 @@
+{
+    "type": "object",
+    "properties": {
+        "states": {
+            "type": "array",
+            "minItems": 2,
+            "required": true,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "required": true
+                    }
+                }
+            }
+        },
+        "edges": {
+            "type": "array",
+            "minItems": 1,
+            "required": true,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "from": {
+                        "type": "string",
+                        "required": true
+                    },
+                    "to": {
+                        "type": "string",
+                        "required": true
+                    }
+                }
+            }
+        },
+        "currentState": {
+            "type": "string",
+            "required": true
+        },
+        "data": {
+            "type": "object",
+            "required": false
+        }
+    }
+}

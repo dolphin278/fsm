@@ -1,0 +1,26 @@
+{
+  "name": "node-fsm",
+  "version": "0.0.0",
+  "description": "Finite State Machine library",
+  "main": "lib/FSM.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dolphin278/fsm.git"
+  },
+  "keywords": [
+    "fsm",
+    "finite",
+    "state",
+    "machine"
+  ],
+  "author": "Boris Egorov",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "JSV": "~4.0.2",
+    "node-graph": "~0.0.0"
+  }
+}

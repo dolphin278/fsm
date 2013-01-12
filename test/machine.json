@@ -1,0 +1,42 @@
+{
+    "states": [
+        {
+            "name": "A"
+        },
+        {
+            "name": "B"
+        },
+        {
+            "name": "C"
+        },
+        {
+            "name": "D"
+        }
+    ],
+    "edges": [
+        {
+            "name": "AB",
+            "from": "A",
+            "to": "B"
+        },
+        {
+            "name": "AC",
+            "from": "A",
+            "to": "C"
+        },
+        {
+            "name": "BD",
+            "from": "B",
+            "to": "D"
+        },
+        {
+            "name": "CD",
+            "from": "C",
+            "to": "D"
+        }
+    ],
+    "currentState": "A",
+    "data": {
+        "someData": "someDataValue"
+    }
+}
