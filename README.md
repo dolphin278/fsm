@@ -75,6 +75,10 @@ Returns array of edges, that can be followed from current machine state.
 Attempt to change machine state following edge specified by `edgeName`.
 Callback should take two arguments `(err, status)`, where `err` will contain any errors encountered during attempt to change state, and `status` will contain boolean value indication whether attempt was successful, or not.
 
+###getGraph()
+
+Returns instance of `node-graph` Graph object that you could use to navigate across fsm state graph. See docs for node-graph for methods reference.
+
 ## Events
 
 ## emit('state', edge)

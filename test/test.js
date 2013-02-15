@@ -1,6 +1,7 @@
 var assert = require('assert');
 var FSM = require('../lib/FSM');
 var machine = require('./machine.json');
+var Graph = require('node-graph');
 
 var routerLog = {};
 
@@ -34,6 +35,9 @@ describe('FSM', function () {
         fsm.on('terminal', function (edge) {
             eventsTerminalLog[edge.from + edge.to] = (eventsTerminalLog[edge.from + edge.to] || 0) + 1;
         })
+
+        var graph = fsm.getGraph();
+        assert(graph instanceof Graph);
     });
 
     describe('when requesting available edges', function () {
