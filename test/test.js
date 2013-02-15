@@ -20,9 +20,9 @@ describe('FSM', function () {
     it('should be created', function () {
         assert(fsm);
         assert(fsm instanceof FSM, JSON.stringify(fsm));
-        assert(fsm.graph);
-        assert(fsm.graph.edges);
-        assert(fsm.graph.nodes);
+        assert(fsm);
+        assert(fsm.edges);
+        assert(fsm.nodes);
         assert(fsm.currentState);
         assert.equal(fsm.currentState, machine.currentState);
         assert(fsm.data.someData === "someDataValue");
