@@ -16,7 +16,7 @@ Meanwhile, you can look at `test/test.js` to see usage example.
 
 `machineSpec` should contain state graph (`nodes` and `edges` like in `node-graph`). Additional properties are `currentState` that contains name of current machine state. `data` contains your arbitrary data tied with fsm.
 
-`routerFunc(edge, callback)` is async function that checks, whether we made our transition successfully, or not. First argument is an `edge` object represents state graph edge we attempt to follow (hint: here you can process any arbitrary data you put on edge object in state graph). At the `routerFunc` completion you should call `callback`, passing `err` object, if you encountered any errors, and boolean variable that indicates whether we made transition or not.
+`routerFunc(edge, requestData, callback)` is async function that checks, whether we made our transition successfully, or not. First argument is an `edge` object represents state graph edge we attempt to follow (hint: here you can process any arbitrary data you put on edge object in state graph). At the `routerFunc` completion you should call `callback`, passing `err` object, if you encountered any errors, and boolean variable that indicates whether we made transition or not.
 `routerFunc` is bound to fsm instance, so you can use `this` variable to access machine object.
 
 ```
@@ -42,7 +42,7 @@ var machineSpec = {
     data: { … }
 }
 
-var routerFunc = function (edge, callback) {
+var routerFunc = function (edge, requestData, callback) {
     // Make any external calls to determine,
     // whether our transition is succesfull or not
     // …
@@ -70,9 +70,9 @@ Returns array of edges, that can be followed from current machine state.
     ]
 ```
 
-###follow(edgeName, callback)
+###follow(edgeName, [requestData], callback)
 
-Attempt to change machine state following edge specified by `edgeName`.
+Attempt to change machine state following edge specified by `edgeName` and optional `requestData` that would be passed to `routerFunc` (useful, since it can provide addtional info on change state attempt without modifying any of fsm data). If you omit `requestData` argument, your `routerFunc` will receive `null` value as a second argument.
 Callback should take two arguments `(err, status)`, where `err` will contain any errors encountered during attempt to change state, and `status` will contain boolean value indication whether attempt was successful, or not.
 
 ###getGraph()
@@ -89,3 +89,9 @@ While edge object contains both `from` and `to` fields, you can figure out, what
 ## emit('terminal', edge)
 
 When we successfully made a transition to a new state, and this state is terminal (there is no edges outbound for current state) fsm instance emits 'terminal' event, passing edge we followed as argument.
+
+# Changelog
+
+## 2.0.0
+
+Now `.follow()` takes `requestData` as a second argument, containing data that will be passed to `routerFunc` without altering fsm. This change is backward incompatible — you should update your `routerFunc` to take three arguments (see docs on `routerFunc` earlier).
