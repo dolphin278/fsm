@@ -3,10 +3,12 @@ var FSM = require('../lib/FSM');
 var machine = require('./machine.json');
 var Graph = require('node-graph');
 
-var routerLog = {};
+var routerLog = {},
+    requestDataLog = {};
 
-var routerFunc = function (edge, callback) {
+var routerFunc = function (edge, requestData, callback) {
     routerLog[edge.name] = (routerLog[edge.name] || 0) + 1;
+    requestDataLog[edge.name] = requestData;
     callback(null, true);
 };
 
@@ -73,7 +75,8 @@ describe('FSM', function () {
                 assert(eventsStateLog["AB"] >  0);
             });
 
-            describe('when attempting to follow edge BD', function () {
+            describe('when attempting to follow edge BD passing own data', function () {
+                var rData = { someData:"1" };
                 before(function (done) {
                     fsm.follow("BD", done);
                 });
@@ -81,6 +84,10 @@ describe('FSM', function () {
                 it('should emit "terminal" event', function () {
                     assert(eventsTerminalLog["BD"] > 0);
                 });
+
+                // it('should pass request data', function () {
+                //     assert.deepEqual(requestDataLog["BD"], rData);
+                // });
             });
         });
     });
